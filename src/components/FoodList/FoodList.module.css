@@ -1,0 +1,129 @@
+.container {
+    height: 82vh;
+    width: 35vw;
+
+    display: flex-wrap;
+    justify-content: space-around;
+    text-align: center;
+
+    border-radius: 10px 10px 0px 0px;
+}
+
+.title_container {
+    height: 8%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background: linear-gradient(to right, var(--turquoise), var(--verydarkturquoise));
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.title {
+    height: 100%;
+    width: 50%;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    padding-left: 10px;
+}
+
+.searchBar_container {
+    height: 60%;
+    width: 40%;
+}
+
+.foodList_container {
+    height: 87%;
+    width: 100%;
+    overflow: auto;
+
+    background: white;
+    box-shadow: 0px 5px 15px var(--grey);
+    border-radius: 10px 10px 20px 20px;
+
+    margin-top: 10px;
+}
+
+.title_inner_container {
+    height: 100%;
+    width: 90%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.stat_container {
+    height: 7%;
+    background: var(--lightgrey);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.stat_header {
+    height: 100%;
+    width: 20%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+
+    color: darkturquoise;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn_container {
+    height: 100%;
+    width: 20%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.btn {
+    height: 70%;
+    width: 80%;
+
+    background: var(--primarygreen);
+    border: 0;
+
+    border-radius: 5px;
+    font-size: 12px;
+    color: white;
+}
+
+.foodList {
+    height: 93%;
+    width: 100%;
+    overflow: auto;
+}
+
+.food {
+    height: 16.5%;
+    width: 100%;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

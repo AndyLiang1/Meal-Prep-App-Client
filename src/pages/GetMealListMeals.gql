@@ -1,0 +1,20 @@
+query GetMealListMeals($dayIndex: Float!) {
+    getMealListMeal(dayIndex: $dayIndex) {
+        ok
+        result {
+            name
+            index
+            id
+            foods {
+                name
+                calories
+                proteins
+                carbs
+                fats
+                givenAmount
+                actualAmount
+            }
+        }
+        message
+    }
+}

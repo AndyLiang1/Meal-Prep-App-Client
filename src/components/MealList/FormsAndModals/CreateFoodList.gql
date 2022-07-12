@@ -1,0 +1,21 @@
+mutation CreateFoodList($input: CreateFoodListInputReal!) {
+    createFoodList(input: $input) {
+        ok
+        result {
+            name
+            calories
+            proteins
+            carbs
+            fats
+            ingredients {
+                name
+                calories
+                proteins
+                carbs
+                fats
+            }
+            givenAmount
+        }
+        message
+    }
+}

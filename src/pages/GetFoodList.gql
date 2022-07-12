@@ -1,0 +1,14 @@
+query GetFoodList {
+    getFoodList {
+        ok
+        result {
+            name
+            calories
+            proteins
+            carbs
+            fats
+            givenAmount
+        }
+        message
+    }
+}

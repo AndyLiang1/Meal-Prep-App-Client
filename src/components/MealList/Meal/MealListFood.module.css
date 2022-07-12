@@ -1,0 +1,154 @@
+.container {
+    height: 80%;
+    width: 100%;
+
+    background-color: white;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    text-align: center;
+
+    border-radius: 10px;
+}
+
+/* 
+.name_container {
+    height: 100%;
+    width: 20%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    font-size: 5px;
+}
+
+.stats_container {
+    height: 100%;
+    width: 80%;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    font-size: 5px;
+} */
+
+.title_container {
+    height: 25%;
+    width: 100%;
+    background: var(--lightgrey);
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+
+    border-radius: 10px 10px 0px 0px;
+}
+
+.title {
+    height: 100%;
+    width: 75%;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+
+    padding-left: 12px;
+}
+
+.btn_container {
+    height: 100%;
+    width: 25%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.btn {
+    height: 50%;
+    width: 50%;
+}
+
+.stat_container {
+    height: 75%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+}
+
+.food_stats {
+    height: 50%;
+    min-height: 50%;
+    width: 50%;
+    min-width: 50%;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+    
+    font-size: 12px;
+
+    padding-left: 16px;
+}
+/* 
+.left_container {
+    height: 95%;
+    width: 65%;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.food_name {
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+    overflow-wrap: break-word;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.right_container {
+    height: 100%;
+    width: 35%;
+    font-size: 5px;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+}
+
+.right_smaller_data_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.food_stats {
+    font-size: 10px;
+} */
