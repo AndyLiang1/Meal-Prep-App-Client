@@ -498,8 +498,7 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
                                             <div> </div>
                                             <Field
                                                 className={styles.potentialIngActualAmount}
-                                                type="number"
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewIngActualAmount(parseInt(e.target.value))}
+                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewIngActualAmount(Number(e.target.value))}
                                                 value={newIngActualAmount}
                                             ></Field>
                                         </div>
