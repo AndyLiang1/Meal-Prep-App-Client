@@ -59,7 +59,7 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
     const dayIndex = useSelector((state: IRootState) => state.dayIndex);
     const [newPotentialIngredient, setNewPotentialIngredient] = useState<Food>();
     const [ingredients, setIngredients] = useState<Food[]>([]);
-    const [newIngActualAmount, setNewIngActualAmount] = useState(0);
+    const [newIngActualAmount, setNewIngActualAmount] = useState<any>(0);
 
     const dispatch = useDispatch();
     const [createMealListFood] = useMutation(CreateMealListFoodDocument);
@@ -78,6 +78,7 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
 
     const [inputErrorCollection, setInputErrorCollection] = useState<any>(null);
     const [errorMsg, setErrorMsg] = useState<string>('');
+    const [errorNewIngAA, setErrorNewIngAA] = useState(false);
 
     useEffect(() => {
         calcTotalStats(ingredients, setTotalStats);
@@ -95,7 +96,12 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
         actualAmount: ''
     };
 
-    const addToIngredientList = (newIngredientActualAmount: number) => {
+    const addToIngredientList = (newIngredientActualAmount: any) => {
+        if (newIngredientActualAmount === '' || newIngredientActualAmount === '0' || newIngredientActualAmount === NaN) {
+            setErrorNewIngAA(true);
+            return;
+        }
+        newIngredientActualAmount = Number(newIngredientActualAmount);
         if (newPotentialIngredient) {
             newPotentialIngredient.actualAmount = newIngredientActualAmount;
             const newIngredientsList = [...ingredients];
@@ -488,25 +494,29 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
                                     })}
                                 </div>
                                 {newPotentialIngredient && (
-                                    <div className={styles.potentialNewIng}>
-                                        <div>
-                                            {newPotentialIngredient.name} | Given Amt: {newPotentialIngredient.givenAmount}
-                                            {''}
+                                    <>
+                                        <div className={styles.potentialNewIng}>
+                                            <div>
+                                                {newPotentialIngredient.name} | Given Amt: {newPotentialIngredient.givenAmount}
+                                                {''}
+                                            </div>
+                                            <div className={styles.potentialNewIng_AA_container}>
+                                                <div>Actual Amt</div>
+                                                <div> </div>
+                                                <Field
+                                                    className={styles.potentialIngActualAmount}
+                                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                        setNewIngActualAmount(e.target.value);
+                                                    }}
+                                                    value={newIngActualAmount}
+                                                ></Field>
+                                            </div>
+                                            <button type="button" className="btn btn-primary" onClick={() => addToIngredientList(newIngActualAmount)}>
+                                                Add Ingredient to Food
+                                            </button>
                                         </div>
-                                        <div className={styles.potentialNewIng_AA_container}>
-                                            <div>Actual Amt</div>
-                                            <div> </div>
-                                            <Field
-                                                className={styles.potentialIngActualAmount}
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewIngActualAmount(Number(e.target.value))}
-                                                value={newIngActualAmount}
-                                            ></Field>
-                                        </div>
-
-                                        <button type="button" className="btn btn-primary" onClick={() => addToIngredientList(newIngActualAmount)}>
-                                            Add Ingredient to Food
-                                        </button>
-                                    </div>
+                                        <CustomErrorMessage errorMessage={'Please input a number that is greater than 0'} displayFixedMessage={errorNewIngAA} />
+                                    </>
                                 )}
                                 {!ingredients.length ? (
                                     <div>

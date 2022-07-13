@@ -75,7 +75,7 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
     });
 
     const [totalStats, setTotalStats] = useState({ calories: food.calories, proteins: food.proteins, carbs: food.carbs, fats: food.carbs });
-    const [newIngActualAmount, setNewIngActualAmount] = useState(0);
+    const [newIngActualAmount, setNewIngActualAmount] = useState<any>(0);
 
     const [showIngCals, setShowIngCals] = useState(false);
     const [showIngP, setShowIngP] = useState(false);
@@ -84,6 +84,7 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
 
     const [inputErrorCollection, setInputErrorCollection] = useState<any>(null);
     const [errorMsg, setErrorMsg] = useState<string>('');
+    const [errorNewIngAA, setErrorNewIngAA] = useState(false);
 
     const getFoodInFoodList = async () => {
         const { data, error, loading } = await getFoodListFood();
@@ -93,8 +94,7 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
             console.error(data?.getFoodListFood.message);
         } else {
             const ingList = data?.getFoodListFood?.result?.ingredients;
-                setIngredients(ingList);
-            
+            setIngredients(ingList);
         }
     };
     useEffect(() => {
@@ -118,7 +118,13 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
         actualAmount: ''
     };
 
-    const addToIngredientList = (newIngredientActualAmount: number) => {
+    const addToIngredientList = (newIngredientActualAmount: any) => {
+        if (newIngredientActualAmount === '' || newIngredientActualAmount === '0' || newIngredientActualAmount === NaN) {
+            setErrorNewIngAA(true);
+            return;
+        }
+        newIngredientActualAmount = Number(newIngredientActualAmount);
+
         if (newPotentialIngredient) {
             newPotentialIngredient.actualAmount = newIngredientActualAmount;
             const newIngredientsList = [...ingredients];
@@ -495,25 +501,27 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
                                 })}
                             </div>
                             {newPotentialIngredient && (
-                                <div className={styles.potentialNewIng}>
-                                    <div>
-                                        {newPotentialIngredient.name} | Given Amt: {newPotentialIngredient.givenAmount}
-                                        {''}
-                                    </div>
-                                    <div className={styles.potentialNewIng_AA_container}>
-                                        <div>Actual Amt</div>
-                                        <div> </div>
-                                        <Field
-                                            className={styles.potentialIngActualAmount}
-                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewIngActualAmount(Number(e.target.value))}
-                                            value={newIngActualAmount}
-                                        ></Field>
-                                    </div>
+                                <>
+                                    <div className={styles.potentialNewIng}>
+                                        <div>
+                                            {newPotentialIngredient.name} | Given Amt: {newPotentialIngredient.givenAmount}
+                                            {''}
+                                        </div>
+                                        <div className={styles.potentialNewIng_AA_container}>
+                                            <div>Actual Amt</div>
+                                            <div> </div>
+                                            <Field
+                                                className={styles.potentialIngActualAmount}
+                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewIngActualAmount(e.target.value)}
+                                                value={newIngActualAmount}
+                                            ></Field>
+                                        </div>
 
-                                    <button type="button" className="btn btn-primary" onClick={() => addToIngredientList(newIngActualAmount)}>
-                                        Add Ingredient to Food
-                                    </button>
-                                </div>
+                                        <button type="button" className="btn btn-primary" onClick={() => addToIngredientList(newIngActualAmount)}>
+                                            Add Ingredient to Food
+                                        </button>
+                                    </div>
+                                </>
                             )}
                             {!ingredients.length ? (
                                 <div>
