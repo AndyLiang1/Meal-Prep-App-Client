@@ -110,11 +110,11 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
     const initialValues = {
         newActualAmount: '',
         name: fromWhere === 'foodList' ? food.name : '',
-        calories: fromWhere === 'foodList' ? food.calories : '',
-        proteins: fromWhere === 'foodList' ? food.proteins : '',
-        carbs: fromWhere === 'foodList' ? food.carbs : '',
-        fats: fromWhere === 'foodList' ? food.fats : '',
-        givenAmount: fromWhere === 'foodList' ? food.givenAmount : '',
+        calories: fromWhere === 'foodList' ? food.calories.toFixed(0) : '',
+        proteins: fromWhere === 'foodList' ? food.proteins.toFixed(2) : '',
+        carbs: fromWhere === 'foodList' ? food.carbs.toFixed(2) : '',
+        fats: fromWhere === 'foodList' ? food.fats.toFixed(2) : '',
+        givenAmount: fromWhere === 'foodList' ? food.givenAmount.toFixed(2) : '',
         actualAmount: ''
     };
 
@@ -168,7 +168,6 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
 
     const checkResponseOk = (response: any) => {
         const actualResponse = response.data[Object.keys(response.data)[0]];
-        console.log(actualResponse);
         if (!actualResponse.ok) {
             setErrorMsg(actualResponse.message);
             return false;
@@ -312,7 +311,6 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
             default:
                 break;
         }
-        console.log(editResponse);
         if (!checkResponseOk(editResponse)) {
             return;
         }
@@ -435,23 +433,23 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>P:</div>
-                                        <div className={styles.amount}>{((food.proteins * food.actualAmount!) / food.givenAmount).toFixed(0)}</div>
+                                        <div className={styles.amount}>{((food.proteins * food.actualAmount!) / food.givenAmount).toFixed(2)}</div>
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>C:</div>
-                                        <div className={styles.amount}>{((food.carbs * food.actualAmount!) / food.givenAmount).toFixed(0)}</div>
+                                        <div className={styles.amount}>{((food.carbs * food.actualAmount!) / food.givenAmount).toFixed(2)}</div>
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>F:</div>
-                                        <div className={styles.amount}>{((food.fats * food.actualAmount!) / food.givenAmount).toFixed(0)}</div>
+                                        <div className={styles.amount}>{((food.fats * food.actualAmount!) / food.givenAmount).toFixed(2)}</div>
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>Given Amount:</div>
-                                        <div className={styles.amount}>{food.givenAmount.toFixed(0)}</div>
+                                        <div className={styles.amount}>{food.givenAmount.toFixed(2)}</div>
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>Actual Amount:</div>
-                                        <div className={styles.amount}>{food.actualAmount!.toFixed(0)}</div>
+                                        <div className={styles.amount}>{food.actualAmount!.toFixed(2)}</div>
                                     </div>
                                     <div className={styles.label_amount_container}>
                                         <div className={styles.edit_label}>New Actual Amount:</div>
@@ -488,11 +486,13 @@ export function EditFoodForm({ fromWhere, food, setEditFoodForm, mealId, foodInd
                             >
                                 <option value=""></option>
                                 {user.foodList.map((food: Food, index: number) => {
-                                    return (
-                                        <option key={index} value={food.name}>
-                                            {food.name}
-                                        </option>
-                                    );
+                                    if (!food.ingredients.length) {
+                                        return (
+                                            <option key={index} value={food.name}>
+                                                {food.name}
+                                            </option>
+                                        );
+                                    }
                                 })}
                             </Field>
                             <div className={styles.ing_container}>

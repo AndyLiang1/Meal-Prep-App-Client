@@ -32,7 +32,7 @@ import {
 } from '../../../generated/graphql-client';
 import { CloseBtn, DropDownIcon, DropUpIcon } from '../../helpers/Icons';
 import { CustomErrorMessage } from '../../Others/CustomErrorMessage';
-import { foodList_newNoIng_Schema, mealListFood_createExisting_Schema, mealListFood_newNoIng_Schema } from './AddFoodFormValidationSchema';
+import { foodList_newNoIng_Schema, foodList_newYesIng_Schema, mealListFood_createExisting_Schema, mealListFood_newNoIng_Schema, mealListFood_newYesIng_Schema } from './AddFoodFormValidationSchema';
 import { calcTotalStats } from '../../helpers/HelperFunctionsForAddAndEditFood';
 
 export interface IAddFoodFormProps {
@@ -145,7 +145,6 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
 
     const checkResponseOk = (response: any) => {
         const actualResponse = response.data[Object.keys(response.data)[0]];
-        console.log(actualResponse);
         if (!actualResponse.ok) {
             setErrorMsg(actualResponse.message);
             return false;
@@ -344,7 +343,7 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
                             break;
                         case false:
                             try {
-                                await foodList_newNoIng_Schema.validate(
+                                await foodList_newYesIng_Schema.validate(
                                     {
                                         name,
                                         givenAmount
@@ -377,13 +376,14 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
                                     { abortEarly: false }
                                 );
                             } catch (e: any) {
+                                console.error(e);
                                 setUpErrorMessageDisplay(e);
                                 return;
                             }
                             break;
                         case false:
                             try {
-                                await foodList_newNoIng_Schema.validate(
+                                await mealListFood_newYesIng_Schema.validate(
                                     {
                                         name,
                                         givenAmount,
@@ -481,11 +481,13 @@ export function AddFoodForm({ fromWhere, setAddFoodForm, mealId }: IAddFoodFormP
                                 >
                                     <option value=""></option>
                                     {user.foodList.map((food: Food, index: number) => {
-                                        return (
-                                            <option key={index} value={food.name}>
-                                                {food.name}
-                                            </option>
-                                        );
+                                        if (!food.ingredients.length) {
+                                            return (
+                                                <option key={index} value={food.name}>
+                                                    {food.name}
+                                                </option>
+                                            );
+                                        }
                                     })}
                                 </Field>
                                 <div className={styles.ing_container}>
